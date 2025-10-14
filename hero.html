@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modern Hero Section</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css?family=Raleway:700|Roboto:300" rel="stylesheet">
+
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #1f2937;
+    background: #f9fafb;
+  }
+
+  h1 {
+    font-family: 'Raleway', sans-serif;
+  }
+
+  /* Hero fade-in animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s forwards;
+  }
+  .fade-up.delay-1 { animation-delay: 0.3s; }
+  .fade-up.delay-2 { animation-delay: 0.6s; }
+  .fade-up.delay-3 { animation-delay: 0.9s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Smiley animations */
+  .smile { transition: d 0.3s ease; stroke: #fff; }
+  #eye-left, #eye-right { stroke: #fff; fill: #fff; transition: cx 0.1s, cy 0.1s; }
+  @keyframes blink { 0%, 80%, 100% { r: 1; } 85% { r: 0.1; } }
+  .blink { animation: blink 2.5s infinite; }
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
+  <div class="space-y-8 max-w-3xl fade-up delay-1">
+    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight tracking-tight">
+      Empower Your <span class="text-yellow-500">Digital Future</span>
+    </h1>
+    <p class="text-lg md:text-xl text-gray-700 font-light leading-relaxed fade-up delay-2 max-w-2xl mx-auto">
+      Discover the next generation of smart solutions that drive innovation, efficiency, and growth for modern businesses.
+    </p>
+
+    <!-- Buttons -->
+    <div class="flex justify-center gap-5 mt-8 flex-wrap fade-up delay-3">
+      <button class="flex items-center gap-3 bg-yellow-400 text-white px-8 py-4 rounded-full font-semibold hover:bg-yellow-500 transition-all shadow-xl hover:shadow-2xl">
+        <!-- Smiley SVG -->
+        <svg id="smiley" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path id="mouth" class="smile" d="M7 17s2 2.5 5 2.5 5-2.5 5-2.5"/>
+          <circle id="eye-left" class="blink" cx="9" cy="9" r="1"/>
+          <circle id="eye-right" class="blink" cx="15" cy="9" r="1"/>
+        </svg>
+        Get Started
+      </button>
+
+      <button class="bg-gray-100 text-gray-800 px-8 py-4 rounded-full font-semibold hover:bg-gray-200 transition-all shadow-lg hover:shadow-xl">
+        Learn More
+      </button>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
+
+
+
+
+
+
