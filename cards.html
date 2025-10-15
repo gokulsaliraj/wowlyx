@@ -186,7 +186,8 @@
       <div class="card__image-container">
         <img class="card__image" src="./images/2151039338.jpg" alt="">
         <div class="card__overlay">
-          <h1 class="card__title">Real-Time Insights Updated:15-10-2025 12:38 PM</h1>
+          <h1 class="card__title">Real-Time Insights 12:46 pm
+Wednesday, 15 October 2025 (IST)</h1>
           <p class="card__description">Analyze live data from cameras and sensors to make instant decisions.</p>
           <button class="card__button">Explore <i data-lucide="arrow-right"></i></button>
         </div>
@@ -285,11 +286,10 @@
     const target = Math.max(0, Math.min(next, cards.length - 1)) * window.innerHeight;
 
     window.scrollTo({ top: target, behavior: 'smooth' });
-    setTimeout(() => (isScrolling = false), 900); // delay per scroll step
+    setTimeout(() => (isScrolling = false), 1000); // delay per scroll step
   }, { passive: false });
 
   lucide.createIcons();
 </script>
 </body>
 </html>
-
