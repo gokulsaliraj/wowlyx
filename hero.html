@@ -54,15 +54,16 @@
 
     <!-- Buttons -->
     <div class="flex justify-center gap-5 mt-8 flex-wrap fade-up delay-3">
-      <button class="flex items-center gap-3 bg-yellow-400 text-white px-8 py-4 rounded-full font-semibold hover:bg-yellow-500 transition-all shadow-xl hover:shadow-2xl">
-        <!-- Smiley SVG -->
-        <svg id="smiley" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path id="mouth" class="smile" d="M7 17s2 2.5 5 2.5 5-2.5 5-2.5"/>
-          <circle id="eye-left" class="blink" cx="9" cy="9" r="1"/>
-          <circle id="eye-right" class="blink" cx="15" cy="9" r="1"/>
-        </svg>
-        Get Started
-      </button>
+<button onclick="document.getElementById('cards').scrollIntoView({ behavior: 'smooth' });"
+  class="flex items-center gap-3 bg-yellow-400 text-white px-8 py-4 rounded-full font-semibold hover:bg-yellow-500 transition-all shadow-xl hover:shadow-2xl">
+  <svg id="smiley" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path id="mouth" class="smile" d="M7 17s2 2.5 5 2.5 5-2.5 5-2.5"/>
+    <circle id="eye-left" class="blink" cx="9" cy="9" r="1"/>
+    <circle id="eye-right" class="blink" cx="15" cy="9" r="1"/>
+  </svg>
+  Get Started
+</button>
+
 
       <button class="bg-gray-100 text-gray-800 px-8 py-4 rounded-full font-semibold hover:bg-gray-200 transition-all shadow-lg hover:shadow-xl">
         Learn More
