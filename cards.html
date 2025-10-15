@@ -17,46 +17,8 @@
     font-family: 'Inter', sans-serif;
     color: #1a1a1a;
     overflow-x: hidden;
-    scroll-behavior: smooth;
   }
 
-  /* Hero Section (optional if you want one before cards) */
-  .hero {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 8rem 1.5rem 4rem;
-    text-align: center;
-  }
-
-  .hero h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #111827;
-  }
-
-  .hero p {
-    font-size: 1.25rem;
-    line-height: 1.8;
-    color: #4b5563;
-    margin-bottom: 2rem;
-  }
-
-  .hero .hero-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #facc15;
-    color: #111827;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    transition: all 0.3s ease;
-  }
-
-  .hero .hero-button:hover { background: #eab308; transform: translateY(-2px); }
-
-  /* Cards */
   .cards {
     width: 100%;
     max-width: 1200px;
@@ -73,7 +35,6 @@
   }
 
   .card__inner {
-    will-change: transform;
     background: #fff;
     border-radius: 2rem;
     overflow: hidden;
@@ -115,7 +76,6 @@
   .card__title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #fff;
     margin-bottom: 0.75rem;
   }
 
@@ -147,47 +107,19 @@
   }
 
   .space { height: 100vh; }
-  .space--small { height: 50vh; }
-
-  @media (max-width: 768px) {
-    .card__image-container { height: 70vh; }
-    .card__title { font-size: 1.8rem; }
-    .card__description { font-size: 1rem; }
-    .card__overlay { padding: 2rem; }
-    .hero h1 { font-size: 2.2rem; }
-    .hero p { font-size: 1rem; }
-  }
-
-  /* Footer */
-  footer {
-    background: #111827;
-    color: #d1d5db;
-  }
-  footer a {
-    color: #d1d5db;
-    transition: color 0.3s;
-  }
-  footer a:hover {
-    color: #facc15;
-  }
 </style>
 </head>
 
 <body>
+<div class="space"></div>
 
-<!-- Optional space before cards -->
-<div class="space space--small" id="cards"></div>
-
-<!-- Cards Section -->
 <div class="cards">
-  <!-- Card 1 -->
   <div class="card">
     <div class="card__inner">
       <div class="card__image-container">
         <img class="card__image" src="./images/2151039338.jpg" alt="">
         <div class="card__overlay">
-          <h1 class="card__title">Real-Time Insights 
-2:21 pm
+          <h1 class="card__title">Real-Time Insights 2:29 pm
 Wednesday, 15 October 2025 (IST)</h1>
           <p class="card__description">Analyze live data from cameras and sensors to make instant decisions.</p>
           <button class="card__button">Explore <i data-lucide="arrow-right"></i></button>
@@ -196,7 +128,6 @@ Wednesday, 15 October 2025 (IST)</h1>
     </div>
   </div>
 
-  <!-- Card 2 -->
   <div class="card">
     <div class="card__inner">
       <div class="card__image-container">
@@ -210,7 +141,6 @@ Wednesday, 15 October 2025 (IST)</h1>
     </div>
   </div>
 
-  <!-- Card 3 -->
   <div class="card">
     <div class="card__inner">
       <div class="card__image-container">
@@ -224,7 +154,6 @@ Wednesday, 15 October 2025 (IST)</h1>
     </div>
   </div>
 
-  <!-- Card 4 -->
   <div class="card">
     <div class="card__inner">
       <div class="card__image-container">
@@ -239,56 +168,38 @@ Wednesday, 15 October 2025 (IST)</h1>
   </div>
 </div>
 
-<!-- Footer -->
-<footer class="py-16 px-6 md:px-12">
-  <div class="mt-12 border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
-    &copy; 2025 Wowlyx. All rights reserved.
-  </div>
+<footer class="py-16 px-6 md:px-12 text-center text-gray-500 text-sm">
+  &copy; 2025 Wowlyx. All rights reserved.
 </footer>
 
-<!-- Scripts -->
-<script src="https://unpkg.com/aat.js/dist/aat.min.js"></script>
 <script>
-  const { ScrollObserver, valueAtPercentage } = aat;
-  const cardsContainer = document.querySelector('.cards');
+  lucide.createIcons();
+
   const cards = document.querySelectorAll('.card');
-
-  cardsContainer.style.setProperty('--cards-count', cards.length);
-  cardsContainer.style.setProperty('--card-height', `${cards[0].clientHeight}px`);
-
-  cards.forEach((card, index) => {
-    const offsetTop = 20 + index * 20;
-    card.style.paddingTop = `${offsetTop}px`;
-    if (index === cards.length - 1) return;
-
-    const toScale = 1 - (cards.length - 1 - index) * 0.1;
-    const nextCard = cards[index + 1];
-    const cardInner = card.querySelector('.card__inner');
-
-    ScrollObserver.Element(nextCard, {
-      offsetTop,
-      offsetBottom: window.innerHeight - card.clientHeight
-    }).onScroll(({ percentageY }) => {
-      const eased = Math.pow(percentageY, 0.5);
-      cardInner.style.scale = valueAtPercentage({ from: 1, to: toScale, percentage: eased });
-      cardInner.style.filter = `brightness(${valueAtPercentage({ from: 1, to: 0.7, percentage: eased })})`;
-    });
-  });
-
-  // 🧭 Smooth controlled scroll – lock to one card at a time
   let currentIndex = 0;
   let isScrolling = false;
 
   function scrollToCard(index) {
-    const target = index * window.innerHeight;
-    window.scrollTo({ top: target, behavior: 'smooth' });
+    const card = cards[index];
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const targetY = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2);
+
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth'
+    });
   }
 
   window.addEventListener('wheel', (e) => {
     if (isScrolling) return;
     e.preventDefault();
 
+    // detect direction only, ignore scroll strength
     const direction = e.deltaY > 0 ? 1 : -1;
+
+    // move by only ONE card
     const nextIndex = Math.max(0, Math.min(currentIndex + direction, cards.length - 1));
 
     if (nextIndex === currentIndex) return;
@@ -297,12 +208,12 @@ Wednesday, 15 October 2025 (IST)</h1>
     currentIndex = nextIndex;
     scrollToCard(currentIndex);
 
-    setTimeout(() => (isScrolling = false), 1000);
+    // allow next scroll after animation completes
+    setTimeout(() => isScrolling = false, 900);
   }, { passive: false });
 
+  // Optional: Scroll to first card on load
   window.addEventListener('load', () => scrollToCard(0));
-
-  lucide.createIcons();
 </script>
 </body>
 </html>
