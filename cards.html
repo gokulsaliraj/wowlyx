@@ -186,7 +186,8 @@
       <div class="card__image-container">
         <img class="card__image" src="./images/2151039338.jpg" alt="">
         <div class="card__overlay">
-          <h1 class="card__title">Real-Time Insights 12:53 pm
+          <h1 class="card__title">Real-Time Insights 
+2:21 pm
 Wednesday, 15 October 2025 (IST)</h1>
           <p class="card__description">Analyze live data from cameras and sensors to make instant decisions.</p>
           <button class="card__button">Explore <i data-lucide="arrow-right"></i></button>
@@ -268,26 +269,38 @@ Wednesday, 15 October 2025 (IST)</h1>
       offsetTop,
       offsetBottom: window.innerHeight - card.clientHeight
     }).onScroll(({ percentageY }) => {
-      const eased = Math.pow(percentageY, 0.5); // slower easing
+      const eased = Math.pow(percentageY, 0.5);
       cardInner.style.scale = valueAtPercentage({ from: 1, to: toScale, percentage: eased });
       cardInner.style.filter = `brightness(${valueAtPercentage({ from: 1, to: 0.7, percentage: eased })})`;
     });
   });
 
-  // 🧭 Smooth controlled scroll – one card per scroll
+  // 🧭 Smooth controlled scroll – lock to one card at a time
+  let currentIndex = 0;
   let isScrolling = false;
+
+  function scrollToCard(index) {
+    const target = index * window.innerHeight;
+    window.scrollTo({ top: target, behavior: 'smooth' });
+  }
+
   window.addEventListener('wheel', (e) => {
     if (isScrolling) return;
     e.preventDefault();
-    isScrolling = true;
 
     const direction = e.deltaY > 0 ? 1 : -1;
-    const next = Math.round(window.scrollY / window.innerHeight) + direction;
-    const target = Math.max(0, Math.min(next, cards.length - 1)) * window.innerHeight;
+    const nextIndex = Math.max(0, Math.min(currentIndex + direction, cards.length - 1));
 
-    window.scrollTo({ top: target, behavior: 'smooth' });
-    setTimeout(() => (isScrolling = false), 2000); // delay per scroll step
+    if (nextIndex === currentIndex) return;
+
+    isScrolling = true;
+    currentIndex = nextIndex;
+    scrollToCard(currentIndex);
+
+    setTimeout(() => (isScrolling = false), 1000);
   }, { passive: false });
+
+  window.addEventListener('load', () => scrollToCard(0));
 
   lucide.createIcons();
 </script>
