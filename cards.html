@@ -1,219 +1,60 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Wowlyx - Vision Intelligence Platform</title>
-
-<!-- Tailwind & Fonts -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
-
-<style>
-  * { box-sizing: border-box; }
-  body {
-    background: linear-gradient(180deg, #f4f4f8 0%, #e8e8ee 100%);
-    font-family: 'Inter', sans-serif;
-    color: #1a1a1a;
-    overflow-x: hidden;
-  }
-
-  .cards {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-rows: repeat(var(--cards-count), var(--card-height));
-    gap: 60px 0;
-  }
-
-  .card {
-    position: sticky;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .card__inner {
-    background: #fff;
-    border-radius: 2rem;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transform-origin: center top;
-    transition: transform 0.4s ease, filter 0.4s ease;
-  }
-
-  .card__image-container {
-    position: relative;
-    height: 80vh;
-    overflow: hidden;
-  }
-
-  .card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 2rem;
-    transition: transform 0.6s ease, filter 0.6s ease;
-  }
-
-  .card__inner:hover .card__image {
-    transform: scale(1.05);
-    filter: brightness(1.05);
-  }
-
-  .card__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 3rem 2.5rem;
-    color: white;
-  }
-
-  .card__title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .card__description {
-    line-height: 1.6;
-    font-size: 1.125rem;
-    color: #f3f4f6;
-    margin-bottom: 1.5rem;
-  }
-
-  .card__button {
-    align-self: flex-start;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255,255,255,0.4);
-    backdrop-filter: blur(6px);
-    color: white;
-    font-weight: 600;
-    border-radius: 9999px;
-    padding: 0.75rem 1.25rem;
-    transition: all 0.3s ease;
-  }
-
-  .card__button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateX(5px);
-  }
-
-  .space { height: 100vh; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wowlyx Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
+<body class="bg-gray-100">
 
-<body>
-<div class="space"></div>
+  <!-- Navbar placeholder -->
+  <div id="navbar-container"></div>
 
-<div class="cards">
-  <div class="card">
-    <div class="card__inner">
-      <div class="card__image-container">
-        <img class="card__image" src="./images/2151039338.jpg" alt="">
-        <div class="card__overlay">
-          <h1 class="card__title">Real-Time Insights 2:29 pm
-Wednesday, 15 October 2025 (IST)</h1>
-          <p class="card__description">Analyze live data from cameras and sensors to make instant decisions.</p>
-          <button class="card__button">Explore <i data-lucide="arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Hero placeholder -->
+  <div id="hero-container"></div>
 
-  <div class="card">
-    <div class="card__inner">
-      <div class="card__image-container">
-        <img class="card__image" src="./images/2150757411.jpg" alt="">
-        <div class="card__overlay">
-          <h1 class="card__title">Smart Security</h1>
-          <p class="card__description">Utilize advanced technology to enhance safety and security in urban environments.</p>
-          <button class="card__button">Discover <i data-lucide="arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
+    <div id="cards-container"></div>
 
-  <div class="card">
-    <div class="card__inner">
-      <div class="card__image-container">
-        <img class="card__image" src="./images/2151488717.jpg" alt="">
-        <div class="card__overlay">
-          <h1 class="card__title">Efficient Operations</h1>
-          <p class="card__description">Streamline processes and improve productivity with real-time data insights.</p>
-          <button class="card__button">Begin <i data-lucide="arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Load navbar dynamically -->
+  <script>
+    fetch('nav.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+        const script = document.createElement('script');
+        script.src = 'script.js'; // JS for navbar interactions
+        document.body.appendChild(script);
+      })
+      .catch(err => console.error('Navbar failed to load:', err));
+  </script>
 
-  <div class="card">
-    <div class="card__inner">
-      <div class="card__image-container">
-        <img class="card__image" src="./images/2152024166.jpg" alt="">
-        <div class="card__overlay">
-          <h1 class="card__title">Scalable Platform</h1>
-          <p class="card__description">Easily adapt to changing demands and scale your operations seamlessly.</p>
-          <button class="card__button">Begin <i data-lucide="arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <!-- Load hero dynamically -->
+  <script>
+    fetch('hero.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('hero-container').innerHTML = data;
+      })
+      .catch(err => console.error('Hero failed to load:', err));
+  </script>
 
-<footer class="py-16 px-6 md:px-12 text-center text-gray-500 text-sm">
-  &copy; 2025 Wowlyx. All rights reserved.
-</footer>
 
-<script>
-  lucide.createIcons();
+    <script>
+    fetch('cards.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('cards-container').innerHTML = data;
+      })
+      .catch(err => console.error('Cards failed to load:', err));
+  </script>
 
-  const cards = document.querySelectorAll('.card');
-  let currentIndex = 0;
-  let isScrolling = false;
 
-  function scrollToCard(index) {
-    const card = cards[index];
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const targetY = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2);
 
-    window.scrollTo({
-      top: targetY,
-      behavior: 'smooth'
-    });
-  }
 
-  window.addEventListener('wheel', (e) => {
-    if (isScrolling) return;
-    e.preventDefault();
 
-    // detect direction only, ignore scroll strength
-    const direction = e.deltaY > 0 ? 1 : -1;
 
-    // move by only ONE card
-    const nextIndex = Math.max(0, Math.min(currentIndex + direction, cards.length - 1));
-
-    if (nextIndex === currentIndex) return;
-
-    isScrolling = true;
-    currentIndex = nextIndex;
-    scrollToCard(currentIndex);
-
-    // allow next scroll after animation completes
-    setTimeout(() => isScrolling = false, 900);
-  }, { passive: false });
-
-  // Optional: Scroll to first card on load
-  window.addEventListener('load', () => scrollToCard(0));
-</script>
 </body>
 </html>
