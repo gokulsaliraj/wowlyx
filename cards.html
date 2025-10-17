@@ -1,60 +1,210 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wowlyx Home</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wowlyx - Vision Intelligence Platform</title>
+
+<!-- Tailwind & Fonts -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: linear-gradient(180deg, #f4f4f8 0%, #e8e8ee 100%);
+    font-family: 'Inter', sans-serif;
+    color: #1a1a1a;
+    overflow-x: hidden;
+  }
+
+  /* Hero Section */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 4rem;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #4b5563;
+    margin-bottom: 2rem;
+  }
+
+  .hero .hero-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #facc15;
+    color: #111827;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+  }
+
+  .hero .hero-button:hover { background: #eab308; transform: translateY(-2px); }
+
+  /* Cards */
+  .cards { width: 100%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-rows: repeat(var(--cards-count), var(--card-height)); gap: 60px 0; }
+  .card { position: sticky; top: 50%; transform: translateY(-50%); }
+  .card__inner {
+    will-change: transform;
+    background: #fff;
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform-origin: center top;
+    transition: transform 0.4s ease, filter 0.4s ease;
+  }
+  .card__image-container { position: relative; height: 80vh; overflow: hidden; }
+  .card__image { width: 100%; height: 100%; object-fit: cover; border-radius: 2rem; transition: transform 0.6s ease, filter 0.6s ease; }
+  .card__inner:hover .card__image { transform: scale(1.05); filter: brightness(1.05); }
+
+  .card__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 3rem 2.5rem; color: white;
+  }
+  .card__title { font-size: 2.5rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .card__description { line-height: 1.6; font-size: 1.125rem; color: #f3f4f6; margin-bottom: 1.5rem; }
+  .card__button {
+    align-self: flex-start;
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    backdrop-filter: blur(6px);
+    color: white; font-weight: 600; border-radius: 9999px;
+    padding: 0.75rem 1.25rem; transition: all 0.3s ease;
+  }
+  .card__button:hover { background: rgba(255, 255, 255, 0.3); transform: translateX(5px); }
+
+  .space { height: 100vh; }
+  .space--small { height: 50vh; }
+
+  @media (max-width: 768px) {
+    .card__image-container { height: 70vh; }
+    .card__title { font-size: 1.8rem; }
+    .card__description { font-size: 1rem; }
+    .card__overlay { padding: 2rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 1rem; }
+  }
+
+  /* Footer */
+  footer { background: #111827; color: #d1d5db; }
+  footer a { color: #d1d5db; transition: color 0.3s; }
+  footer a:hover { color: #facc15; }
+</style>
 </head>
-<body class="bg-gray-100">
 
-  <!-- Navbar placeholder -->
-  <div id="navbar-container"></div>
+<body>
 
-  <!-- Hero placeholder -->
-  <div id="hero-container"></div>
+<div class="space space--small" id="cards"></div>
 
-    <div id="cards-container"></div>
+<div class="cards">
+  <!-- Card 1 -->
+  <div class="card">
+    <div class="card__inner">
+      <div class="card__image-container">
+        <img class="card__image" src="./images/2151039338.jpg" alt="">
+        <div class="card__overlay">
+          <h1 class="card__title">Real-Time Insights</h1>
+          <p class="card__description">Analyze live data from cameras and sensors to make instant decisions.</p>
+          <button class="card__button">Explore <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Load navbar dynamically -->
-  <script>
-    fetch('nav.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('navbar-container').innerHTML = data;
-        const script = document.createElement('script');
-        script.src = 'script.js'; // JS for navbar interactions
-        document.body.appendChild(script);
-      })
-      .catch(err => console.error('Navbar failed to load:', err));
-  </script>
+  <!-- Card 2 -->
+  <div class="card">
+    <div class="card__inner">
+      <div class="card__image-container">
+        <img class="card__image" src="./images/2150757411.jpg" alt="">
+        <div class="card__overlay">
+          <h1 class="card__title">Smart Security</h1>
+          <p class="card__description">Utilize advanced technology to enhance safety and security in urban environments.</p>
+          <button class="card__button">Discover <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Load hero dynamically -->
-  <script>
-    fetch('hero.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('hero-container').innerHTML = data;
-      })
-      .catch(err => console.error('Hero failed to load:', err));
-  </script>
+  <!-- Card 3 -->
+  <div class="card">
+    <div class="card__inner">
+      <div class="card__image-container">
+        <img class="card__image" src="./images/2151488717.jpg" alt="">
+        <div class="card__overlay">
+          <h1 class="card__title">Efficient Operations</h1>
+          <p class="card__description">Streamline processes and improve productivity with real-time data insights.</p>
+          <button class="card__button">Begin <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="card">
+    <div class="card__inner">
+      <div class="card__image-container">
+        <img class="card__image" src="./images/2152024166.jpg" alt="">
+        <div class="card__overlay">
+          <h1 class="card__title">Scalable Platform</h1>
+          <p class="card__description">Easily adapt to changing demands and scale your operations seamlessly.</p>
+          <button class="card__button">Begin <i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <script>
-    fetch('cards.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('cards-container').innerHTML = data;
-      })
-      .catch(err => console.error('Cards failed to load:', err));
-  </script>
+<!-- Footer -->
+<footer class="py-16 px-6 md:px-12">
+  <div class="mt-12 border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+    &copy; 2025 Wowlyx. All rights reserved.
+  </div>
+</footer>
 
+<script src="https://unpkg.com/aat.js/dist/aat.min.js"></script>
+<script>
+  const { ScrollObserver, valueAtPercentage } = aat;
+  const cardsContainer = document.querySelector('.cards');
+  const cards = document.querySelectorAll('.card');
 
+  cardsContainer.style.setProperty('--cards-count', cards.length);
+  cardsContainer.style.setProperty('--card-height', `${cards[0].clientHeight}px`);
 
+  cards.forEach((card, index) => {
+    const offsetTop = 20 + index * 20;
+    card.style.paddingTop = `${offsetTop}px`;
+    if (index === cards.length - 1) return;
 
+    const toScale = 1 - (cards.length - 1 - index) * 0.1;
+    const nextCard = cards[index + 1];
+    const cardInner = card.querySelector('.card__inner');
 
+    ScrollObserver.Element(nextCard, {
+      offsetTop,
+      offsetBottom: window.innerHeight - card.clientHeight
+    }).onScroll(({ percentageY }) => {
+      cardInner.style.scale = valueAtPercentage({ from: 1, to: toScale, percentage: percentageY });
+      cardInner.style.filter = `brightness(${valueAtPercentage({ from: 1, to: 0.7, percentage: percentageY })})`;
+    });
+  });
 
+  lucide.createIcons();
+</script>
 </body>
 </html>
