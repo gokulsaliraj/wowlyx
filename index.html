@@ -1,267 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wowlyx Home</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hero + Instagram-Style Scroll Cards</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(180deg, #f4f4f8 0%, #e8e8ee 100%);
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
+<link href="https://fonts.googleapis.com/css?family=Raleway:700|Roboto:300" rel="stylesheet">
 
-    .cards {
-      perspective: 1500px;
-      position: relative;
-      width: 100%;
-      max-width: 1200px;
-      margin: 5rem auto;
-      height: 80vh;
-    }
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* controlled by GSAP */
+    font-family: 'Inter', sans-serif;
+    background: #f9fafb;
+  }
 
-    .card {
-      width: 85%;
-      max-width: 1000px;
-      margin: 0 auto;
-      border-radius: 2rem;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s ease;
-    }
+  h1 { font-family: 'Raleway', sans-serif; }
 
-    .card:hover {
-      transform: translate(-50%, -50%) scale(1.03);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-      z-index: 9999;
-    }
+  /* Hero fade-in animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s forwards;
+  }
+  .fade-up.delay-1 { animation-delay: 0.3s; }
+  .fade-up.delay-2 { animation-delay: 0.6s; }
+  .fade-up.delay-3 { animation-delay: 0.9s; }
 
-    .card__inner {
-      width: 100%;
-      height: 80vh;
-      border-radius: 2rem;
-      overflow: hidden;
-      position: relative;
-    }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    .card__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease, filter 0.6s ease;
-    }
+  /* Smiley animations */
+  .smile { transition: d 0.3s ease; stroke: #fff; }
+  #eye-left, #eye-right { stroke: #fff; fill: #fff; transition: cx 0.1s, cy 0.1s; }
+  @keyframes blink { 0%, 80%, 100% { r: 1; } 85% { r: 0.1; } }
+  .blink { animation: blink 2.5s infinite; }
 
-    .card__inner:hover .card__image {
-      transform: scale(1.05);
-      filter: brightness(1.05);
-    }
+  /* Hero section style */
+  #hero-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    z-index: 10;
+    background: #f9fafb;
+  }
 
-    .card__overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 3rem 2rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0));
-      color: white;
-      border-radius: 2rem;
-    }
+  /* Cards styling */
+ .cards {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  overflow: hidden;
+}
 
-    .card__title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      text-shadow: 0 3px 8px rgba(0,0,0,0.4);
-    }
+/* Smaller, sleeker cards */
+.card {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 65%;              /* reduced from 80% */
+  max-width: 700px;        /* reduced from 900px */
+  height: 65%;             /* reduced from 80% */
+  transform: translate(-50%, -50%);
+  border-radius: 1.5rem;   /* slightly smaller radius for balance */
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
 
-    .card__description {
-      font-size: 1.125rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
+/* Optional subtle hover pop */
+.card:hover {
+  transform: translate(-50%, -50%) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
 
-    .card__button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid rgba(255,255,255,0.4);
-      backdrop-filter: blur(6px);
-      color: white;
-      font-weight: 600;
-      border-radius: 9999px;
-      padding: 0.75rem 1.25rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+.card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
 
-    .card__button:hover {
-      background: rgba(255,255,255,0.35);
-      transform: translateX(5px);
-    }
+.card__overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem 2rem;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.1));
+}
 
-    footer {
-      background: #111827;
-      color: #d1d5db;
-      text-align: center;
-      padding: 4rem 1rem;
-      margin-top: 10rem;
-    }
+.card__title { font-size: 2rem; font-weight: 700; margin-bottom:0.5rem; }
+.card__description { font-size: 1rem; line-height:1.5; margin-bottom:1.25rem; }
 
-    @media (max-width: 768px) {
-      .card__title { font-size: 1.8rem; }
-      .card__description { font-size: 1rem; }
-      .card__inner { height: 60vh; }
-    }
-  </style>
+.card__button {
+  display: inline-flex; align-items:center; gap:0.5rem;
+  background: rgba(255,255,255,0.15); border:2px solid rgba(255,255,255,0.4);
+  color:white; border-radius:9999px; padding:0.6rem 1.1rem;
+  font-weight:600; backdrop-filter:blur(6px); transition: all 0.3s ease;
+}
+.card__button:hover { background: rgba(255,255,255,0.3); transform: translateX(5px); }
+
+</style>
 </head>
+
 <body>
+    <div id="navbar-container"></div>
+  <!-- Hero Section -->
+  <section id="hero-container" class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative">
+    <div class="space-y-8 max-w-3xl fade-up delay-1">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight tracking-tight">
+        Empower Your <span class="text-yellow-500">Digital Future</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-700 font-light leading-relaxed fade-up delay-2 max-w-2xl mx-auto">
+        Discover the next generation of smart solutions that drive innovation, efficiency, and growth for modern businesses.
+      </p>
 
-  <!-- Navbar placeholder -->
-  <div id="navbar-container"></div>
+      <div class="flex justify-center gap-5 mt-8 flex-wrap fade-up delay-3">
+        <button id="startButton"
+          class="flex items-center gap-3 bg-yellow-400 text-white px-8 py-4 rounded-full font-semibold hover:bg-yellow-500 transition-all shadow-xl hover:shadow-2xl">
+          <svg id="smiley" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path id="mouth" class="smile" d="M7 17s2 2.5 5 2.5 5-2.5 5-2.5"/>
+            <circle id="eye-left" class="blink" cx="9" cy="9" r="1"/>
+            <circle id="eye-right" class="blink" cx="15" cy="9" r="1"/>
+          </svg>
+          Get Started
+        </button>
 
-  <!-- Hero placeholder -->
-  <div id="hero-container"></div>
-
-  <!-- Stacked Cards Section -->
-  <section class="cards">
-    <div class="card">
-      <div class="card__inner">
-        <img class="card__image" src="https://picsum.photos/id/1025/1200/800" alt="">
-        <div class="card__overlay">
-          <h2 class="card__title">Real-Time Insights</h2>
-          <p class="card__description">Analyze live data from cameras and sensors to make instant decisions.</p>
-          <button class="card__button">Explore <i data-lucide="arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card__inner">
-        <img class="card__image" src="https://picsum.photos/id/1039/1200/800" alt="">
-        <div class="card__overlay">
-          <h2 class="card__title">Smart Security</h2>
-          <p class="card__description">Enhance safety in urban environments with advanced tech.</p>
-          <button class="card__button">Discover <i data-lucide="arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card__inner">
-        <img class="card__image" src="https://picsum.photos/id/1041/1200/800" alt="">
-        <div class="card__overlay">
-          <h2 class="card__title">Efficient Operations</h2>
-          <p class="card__description">Improve productivity with real-time data insights.</p>
-          <button class="card__button">Begin <i data-lucide="arrow-right"></i></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card__inner">
-        <img class="card__image" src="https://picsum.photos/id/1052/1200/800" alt="">
-        <div class="card__overlay">
-          <h2 class="card__title">Scalable Platform</h2>
-          <p class="card__description">Adapt to changing demands and scale seamlessly.</p>
-          <button class="card__button">Start <i data-lucide="arrow-right"></i></button>
-        </div>
+        <button class="bg-gray-100 text-gray-800 px-8 py-4 rounded-full font-semibold hover:bg-gray-200 transition-all shadow-lg hover:shadow-xl">
+          Learn More
+        </button>
       </div>
     </div>
   </section>
+  <div class="absolute top-36 md:top-34 left-1/2 -translate-x-1/2 w-full px-6 max-w-3xl z-[5] text-center">
+    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight leading-tight" style="font-family: 'Raleway', sans-serif;">
+      Our Smart Solutions
+    </h2>
+    <p class="text-lg md:text-xl text-gray-700 font-light leading-relaxed" style="font-family: 'Inter', sans-serif;">
+      Discover intelligent, scalable, and data-driven solutions designed to 
+      <span class="text-yellow-500 font-bold">empower your digital transformation</span>.
+    </p>
+  </div>
+<!-- Cards Section -->
+<section id="cards-section" class="relative w-full h-screen flex flex-col items-center justify-center text-center bg-[#f9fafb] overflow-hidden">
 
-  <!-- Load navbar dynamically -->
-  <script>
-    fetch('nav.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('navbar-container').innerHTML = data;
-        const script = document.createElement('script');
-        script.src = 'script.js';
-        document.body.appendChild(script);
-      })
-      .catch(err => console.error('Navbar failed to load:', err));
-  </script>
+  <!-- Section Heading + Paragraph -->
 
-  <!-- Load hero dynamically -->
-  <script>
-    fetch('hero.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('hero-container').innerHTML = data;
-      })
-      .catch(err => console.error('Hero failed to load:', err));
-  </script>
 
-  <!-- Lucide & GSAP -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <!-- Cards Container -->
+  <div id="cards" class="cards mt-32 md:mt-40"> <!-- shifted down for spacing -->
+    <div class="card" style="z-index:4;">
+      <img src="./images/2151039338.jpg" alt="">
+      <div class="card__overlay">
+        <h1 class="card__title">Real-Time Insights</h1>
+        <p class="card__description">Analyze live data from cameras and sensors to make instant decisions.</p>
+        <button class="card__button">Explore <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
 
-  <!-- Stacked Cards Scroll Animation -->
-  <script>
-    if(window.lucide) lucide.createIcons();
+    <div class="card" style="z-index:3;">
+      <img src="./images/2150757411.jpg" alt="">
+      <div class="card__overlay">
+        <h1 class="card__title">Smart Security</h1>
+        <p class="card__description">Enhance safety and security in urban environments.</p>
+        <button class="card__button">Discover <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
 
-    gsap.registerPlugin(ScrollTrigger);
-    const cards = document.querySelectorAll(".cards .card");
+    <div class="card" style="z-index:2;">
+      <img src="./images/2151488717.jpg" alt="">
+      <div class="card__overlay">
+        <h1 class="card__title">Efficient Operations</h1>
+        <p class="card__description">Streamline processes and improve productivity.</p>
+        <button class="card__button">Begin <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
 
-    // Stack cards initially
+    <div class="card" style="z-index:1;">
+      <img src="./images/2152024166.jpg" alt="">
+      <div class="card__overlay">
+        <h1 class="card__title">Scalable Platform</h1>
+        <p class="card__description">Easily adapt to changing demands and scale operations seamlessly.</p>
+        <button class="card__button">Start <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  lucide.createIcons();
+
+  const cards = document.querySelectorAll('.card');
+  const hero = document.getElementById('hero-container');
+  const startButton = document.getElementById('startButton');
+  let current = 0;
+  let isScrolling = false;
+  let heroShown = true;
+
+  function showCard(index) {
     cards.forEach((card, i) => {
-      gsap.set(card, { zIndex: cards.length - i, opacity: 1 });
+      if (i < index)
+        gsap.to(card, { y: "-100%", scale: 0.9, opacity: 0, duration: 0.6, ease: "power2.out" });
+      else if (i === index)
+        gsap.to(card, { y: "0%", scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" });
+      else
+        gsap.to(card, { y: "100%", scale: 1.05, opacity: 1, duration: 0.6, ease: "power2.out" });
     });
+  }
 
-    ScrollTrigger.matchMedia({
-      "(min-width: 768px)": function () {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".cards",
-            start: "top top",
-            end: () => `+=${cards.length * window.innerHeight * 0.65}`,
-            pin: true,
-            scrub: 1,
-          }
-        });
+  showCard(current);
 
-        cards.forEach((card, i) => {
-          const dir = i % 2 === 0 ? -100 : 100;
-          if(i < cards.length - 1){
-            tl.to(card, { xPercent: dir, opacity: 0, duration: 1 })
-              .to({}, { duration: 0.3 });
-          }
-        });
-      },
+  function transitionToCards() {
+    gsap.to(hero, { y: "-100%", opacity: 0, duration: 0.8, ease: "power2.inOut" });
+    heroShown = false;
+  }
 
-      "(max-width: 767px)": function () {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".cards",
-            start: "top top",
-            end: () => `+=${cards.length * window.innerHeight * 0.65}`,
-            pin: true,
-            scrub: 1,
-          }
-        });
+  startButton.addEventListener('click', () => {
+    transitionToCards();
+  });
 
-        cards.forEach((card, i) => {
-          if(i < cards.length - 1){
-            tl.to(card, { yPercent: -150, opacity: 0, duration: 1 })
-              .to({}, { duration: 0.3 });
-          }
-        });
+  window.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (isScrolling) return;
+    isScrolling = true;
+
+    if (heroShown && e.deltaY > 0) {
+      transitionToCards();
+    } else if (!heroShown) {
+      if (e.deltaY > 0 && current < cards.length - 1) current++;
+      else if (e.deltaY < 0 && current > 0) current--;
+      else if (e.deltaY < 0 && current === 0) {
+        gsap.to(hero, { y: "0%", opacity: 1, duration: 0.8, ease: "power2.inOut" });
+        heroShown = true;
       }
-    });
-  </script>
+      showCard(current);
+    }
 
+    setTimeout(() => (isScrolling = false), 800);
+  }, { passive: false });
+</script>
+<script>
+  fetch('nav.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('navbar-container').innerHTML = data;
+      const script = document.createElement('script');
+      script.src = 'script.js';
+      document.body.appendChild(script);
+    })
+    .catch(err => console.error('Navbar failed to load:', err));
+</script>
 </body>
 </html>
